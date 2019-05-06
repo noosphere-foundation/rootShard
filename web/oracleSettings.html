@@ -1,0 +1,197 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>RS ORACLE SETTING</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  </head>
+
+  <body class="bg-light">
+
+    <div class="container">
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="images/transparent_logo.png" alt="" width="120" height="120">
+        <h2>NOOSPHERE ROOT SHARD ORACLE SETTINGS</h2>
+        <p class="lead">
+          <blockquote class="blockquote text-right">
+            <p class="mb-0">With great power there must also come great responsibility.</p>
+            <footer class="blockquote-footer">Ben Cooper</footer>
+          </blockquote>
+        </p>
+      </div>
+        <div class="col-md-12 order-md-1">
+          <h4 class="mb-2">ADDING NEW VALUE</h4>
+            <div class="row">
+              <div class="col-md-3 mb-2">
+                <label for="value_nam">Value name</label>
+                <input type="text" class="form-control" id="value_nam" placeholder="USD/BTC" value="">
+              </div>
+              <div class="col-md-3 mb-2">
+                <label for="source_nam">Source name</label>
+                <input type="text" class="form-control" id="source_nam" placeholder="BTC exchange rate" value="">
+              </div>
+              <div class="col-md-4 mb-2">
+                <label for="source_addr">Source address</label>
+                <input type="text" class="form-control" id="source_addr" placeholder="btc.com/erate/btc.json" value="">
+              </div>
+              <div class="col-md-2 mb-2">
+                <label for="refresh">Refresh time</label>
+                <select class="form-control" id="refresh">
+                  <option value = "5">5 seconds</option>
+                  <option value = "10">10 seconds</option>
+                  <option value = "30">30 seconds</option>
+                  <option value = "60">1 minute</option>
+                  <option value = "180">3 minutes</option>
+                  <option value = "300">5 minutes</option>
+                  <option value = "600">10 minutes</option>
+                  <option value = "1800">30 minutes</option>
+                  <option value = "3600">1 hour</option>
+                  <option value = "7200">2 hours</option>
+                  <option value = "18000">5 hours</option>
+                  <option value = "43200">12 hours</option>
+                  <option value = "86400">24 hours</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-2 mb-2">
+                <label for="data_type">Data type</label>
+                <select class="form-control" id="data_type">
+                  <option value = "JSON">JSON</option>
+                  <option value = "XML">XML</option>
+                  <option value = "RAW">RAW DATA</option>
+                </select>
+              </div>
+              <div class="col-md-3 mb-2">
+                <label for="data_way">Rate way</label>
+                <input type="text" class="form-control" id="data_way" placeholder="data, value, btc" value="">
+              </div>
+              <div class="col-md-3 mb-2">
+                <label for="count_way">Count way</label>
+                <input type="text" class="form-control" id="count_way" placeholder="data, count, btc" value="">
+              </div>
+              <div class="col-md-2 mb-2">
+                <label for="count_way">Key list way</label>
+                <input type="text" class="form-control" id="key_way" placeholder="data" value="">
+              </div>
+              <div class="col-md-2 mb-2">
+                <label>Save new value</label>
+                <button class="btn btn-dark btn-md btn-block" onClick = "saveRow()">Save</button>
+              </div>
+            </div>
+        </div>
+        <hr class="mb-4">
+        <div class="py-3 text-center">
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Value name</th>
+                <th scope="col">Source name</th>
+                <th scope="col">Source address</th>
+                <th scope="col">Refresh time</th>
+                <th scope="col">Data type</th>
+                <th scope="col">Data way</th>
+                <th scope="col">Count way</th>
+                <th scope="col">Key way</th>
+              </tr>
+            </thead>
+            <tbody id = "tableBody">
+            </tbody>
+          </table>
+        <div>
+      </div>
+      <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2018-2022 Noosphere</p>
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="http://www.noosphere.net">Noosphere</a></li>
+        </ul>
+      </footer>
+    </div>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-slim.min.js"><\/script>')</script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/holder.min.js"></script>
+    <script>
+        function getStat(){
+            $.ajax({
+                url: "http://192.168.192.42:5005/r/getDataMap",
+                async: false,
+                type: "GET",
+                dataType: 'json',
+                success: function(json){
+                    data = json.DATA;
+                    stemp = "";
+                    for (i = 0; i < data.length; i++){
+                      temp = data[i];
+                      stemp += "<tr onClick = 'toUpdate(this);'>";
+                      stemp += "<td>" + (i+1) + "</td>";
+                      stemp += "<td name = 'name'>" + temp.NAME + "</td>";
+                      stemp += "<td name = 'source'>" + temp.SOURCE_NAME + "</td>";
+                      stemp += "<td name = 'addr'>" + temp.ADDR + "</td>";
+                      stemp += "<td name = 'refresh'>" + temp.REFRESH + " sec</td>";
+                      stemp += "<td name = 'dtype'>" + temp.DATA_TYPE + "</td>";
+                      stemp += "<td name = 'cost'>" + temp.COST_WAY + "</td>";
+                      stemp += "<td name = 'count'>" + temp.COUNT_WAY + "</td>";
+                      stemp += "<td name = 'way'>" + temp.WAY_TO_KEY_LIST + "</td>";
+                      stemp += "</tr>";
+                    }
+                    $("#tableBody").html(stemp);
+                }
+            });
+        }getStat();
+
+        function toUpdate(tr){
+            $("#value_nam").val($(tr).find("td[name='name']").html())
+            $("#source_nam").val($(tr).find("td[name='source']").html())
+            $("#source_addr").val($(tr).find("td[name='addr']").html())
+            $("#refresh").val($(tr).find("td[name='refresh']").html().replace(" sec", ""))
+            $("#data_type").val($(tr).find("td[name='dtype']").html())
+            $("#data_way").val($(tr).find("td[name='cost']").html())
+            $("#count_way").val($(tr).find("td[name='count']").html())
+            $("#key_way").val($(tr).find("td[name='way']").html())
+        }
+
+        function saveRow(){
+            vname = $("#value_nam").val();
+            sname = $("#source_nam").val();
+            saddr = $("#source_addr").val();
+            refresh = $("#refresh").val();
+            data_type = $("#data_type").val();
+            data_way = $("#data_way").val();
+            count_way = $("#count_way").val();
+            key_way = $("#key_way").val();
+
+            if (vname == "" || sname == "" || saddr == "" || refresh == "" || data_type == "" || data_way == ""){
+              alert("Bad data");
+              return 0;
+            }
+
+            $.ajax({
+                url: "http://192.168.192.42:5005/r/saveMapElement",
+                async: false,
+                type: "GET",
+                dataType: 'json',
+                data: {name:vname, nsource:sname, address:saddr, refresh:refresh, dtype:data_type, costway:data_way, countway:count_way, keyway:key_way},
+                success: function(json){
+                  getStat();
+                }
+            });
+        }
+    </script>
+  </body>
+</html>

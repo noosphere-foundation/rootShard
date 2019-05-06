@@ -1,0 +1,305 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Administrative page of the root shard module</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+      <h5 class="my-0 mr-md-auto font-weight-normal">Web application to monitor the operation and configuration root shard</h5>
+      <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" onClick = "pager('monitor');">Monitor</a>
+        <a class="p-2 text-dark" onClick = "pager('settings')">Settings</a>
+      </nav>
+    </div>
+
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+      <h1 class="display-4" id = "page_name">Monitor</h1>
+      <p class="lead" id = "page_descr">Here you can get quick access to the resources used by the systems.</p>
+    </div>
+
+    <div class="container">
+        <div class="card-deck mb-3 text-center pagers" id = "monitor_container">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">CPU</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title" id = "cpu_used"></h1>
+            <button type="button" class="btn btn-md btn-block btn-outline-dark" onClick = "pager('graph_cpu')">Online diagram</button>
+          </div>
+        </div>
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">RAM</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title" id = "memp"></h1>
+            <h3 class="card-title pricing-card-title" id = "memt"></h3>
+            <h3 class="card-title pricing-card-title" id = "memu-memf"></h3>
+            <button type="button" class="btn btn-md btn-block btn-outline-dark" onClick = "pager('graph_cpu')">Online diagram</button>
+          </div>
+        </div>
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">SWAP</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title" id = "swapp"></h1>
+            <h3 class="card-title pricing-card-title" id = "swapt"></h3>
+            <h3 class="card-title pricing-card-title" id = "swapu-swapf"></h3>
+            <button type="button" class="btn btn-md btn-block btn-outline-dark" onClick = "pager('graph_cpu')">Online diagram</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-deck mb-3 text-center pagers" id = "settings_container">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=ORACLE " alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">This system provides access to environment variables with a high degree of confidence through the use of multiple data sources.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-dark">Start</button>
+                      <button type="button" class="btn btn-sm btn-outline-dark" id = "oracleSettingsButton">Settings</button>
+                      <button type="button" class="btn btn-sm btn-outline-dark" id = "oracleLogsButton">Logs</button>
+                    </div>
+                    <small class="text-muted">Uptime: 9 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Shard designer system" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">This system allows users to create their own service shards, register them in the system and distribute among users.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-dark">Start</button>
+                      <button type="button" class="btn btn-sm btn-outline-dark" id = "shardDesignerSettingsButton">Settings</button>
+                      <button type="button" class="btn btn-sm btn-outline-dark" id = "shardDesignerLogsButton">Logs</button>
+                    </div>
+                    <small class="text-muted">Uptime: 9 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=ChekSumKeeper system" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">This system allows users and shards to check the checksums of blockchains running on shards, in order to verify their correctness.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-dark">Start</button>
+                      <button type="button" class="btn btn-sm btn-outline-dark" id = "checkSumSettingsButton">Settings</button>
+                      <button type="button" class="btn btn-sm btn-outline-dark" id = "chekSumKeepLogsButton">Logs</button>
+                    </div>
+                    <small class="text-muted">Uptime: 9 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div class="mb-3 text-center pagers" id = "graph_cpu_container">
+        <div class="row">
+            <div class="col-md-12">
+              <canvas style = "width:100%;height:100%;" id="lineChart"></canvas>
+            </div>
+        </div>
+      </div>
+
+      <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+          <div class="col-12 col-md">
+            <img class="mb-2" src="images/nlogo.png" alt="" width="50" height="50">
+          </div>
+          <div class="col-6 col-md">
+            <h5>Settings</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="#">Oracle system</a></li>
+              <li><a class="text-muted" href="#">Shard designer system</a></li>
+              <li><a class="text-muted" href="#">ChekSumKeeper system</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Resources</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="#">Using resources</a></li>
+              <li><a class="text-muted" href="#">Resource preference</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md">
+            <h5>About</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="#">Manual</a></li>
+              <li><a class="text-muted" href="#">System settings</a></li>
+              <li><a class="text-muted" href="#">Privacy</a></li>
+              <li><a class="text-muted" href="#">Terms</a></li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="js/holder.min.js"></script>
+    <script>
+      // CPU MONITOR
+      var ctx = document.getElementById("lineChart");
+
+      var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: createMas('', 30),
+              datasets: [{
+                  data: createMas(0, 30),
+                  label: 'CPU',
+                  backgroundColor: '#C9CB67',
+                  borderColor: '#C9CB67',
+                  borderWidth: 4,
+                  fill: false
+              },{
+                  data: createMas(0, 30),
+                  label: 'MEM',
+                  backgroundColor: '#6795CB',
+                  borderColor: '#6795CB',
+                  borderWidth: 4,
+                  fill: false
+              },{
+                  data: createMas(0, 30),
+                  label: 'SWAP',
+                  backgroundColor: '#CB6E67',
+                  borderColor: '#CB6E67',
+                  borderWidth: 4,
+                  fill: false
+              }]
+          },
+          options: {
+              animation : false,
+              legend: {
+                  position: 'top',
+                  padding: '500px'
+              },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          max: 100,
+                          stepSize: 10,
+                          beginAtZero: true
+                      }
+                  }]
+              }
+          }
+      });
+
+      function pager(name){
+        $(".pagers").hide();
+        $("#"+name+"_container").show();
+
+        if (name == 'monitor'){
+            $("#page_name").html("Monitor")
+            $("#page_descr").html("Here you can get quick access to the resources used by the systems.")
+        }
+        if (name == 'settings'){
+            $("#page_name").html("Settings")
+            $("#page_descr").html("Here you can get quick access to the settings of all systems.")
+        }
+        if (name == 'graph_cpu'){
+            $("#page_name").html("ONLINE MONITOR")
+            $("#page_descr").html("")
+        }
+
+      } pager('settings');
+
+      function stats(){
+            $.ajax({
+                url: "http://192.168.192.42:5005/r/getOsStat",
+                async: false,
+                type: "GET",
+                dataType: 'json',
+                success: function(json){
+                    $("#cpu_used").html(json.CPU + "%")
+
+                    $("#memp").html(json.MEM.PERCENT + "%")
+                    $("#memt").html(json.MEM.TOTAL + " GB")
+                    $("#memu-memf").html(json.MEM.USED + "/" + json.MEM.FREE)
+
+                    $("#swapp").html(json.SWAP.PERCENT + "%")
+                    $("#swapt").html(json.SWAP.TOTAL + " GB")
+                    $("#swapu-swapf").html(json.SWAP.USED + "/" + json.SWAP.FREE)
+
+                    addingCPU(json.CPU, json.MEM.PERCENT, json.SWAP.PERCENT);
+                }
+            });
+      }setInterval(stats, 1000);
+
+      $("#oracleSettingsButton").on("click", function() {
+        location.href = "oracleSettings.html";
+      });
+
+      function addZero(i){
+          if (i < 10)
+              i = "0" + i;
+          return i;
+      }
+
+      function getTime(){
+        var currentdate = new Date();
+        return addZero(currentdate.getMinutes()) + ":" + addZero(currentdate.getSeconds());
+      }
+
+      function createMas(char, len){
+          mas = []
+          for (i = 0; i < len; i++){
+            mas[i] = char;
+          }
+          return mas;
+      }
+
+      var cpuMasX = createMas('', 30);
+      var cpuMasY = createMas(0, 30);
+      var memMasY = createMas(0, 30);
+      var swapMasY = createMas(0, 30);
+
+      function addingCPU(valCpu, valMem, valSwap){
+              cpuMasY.push(valCpu);
+              memMasY.push(valMem);
+              swapMasY.push(valSwap);
+              cpuMasX.push(getTime());
+              if (cpuMasX.length >= 30){
+                cpuMasY.shift();
+                memMasY.shift();
+                swapMasY.shift();
+                cpuMasX.shift();
+              }
+              myChart.data.datasets[0].data = cpuMasY;
+              myChart.data.datasets[1].data = memMasY;
+              myChart.data.datasets[2].data = swapMasY;
+              myChart.data.labels = cpuMasX;
+              myChart.update();
+      }
+    </script>
+  </body>
+</html>

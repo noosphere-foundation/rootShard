@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Shard designer</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+      <style>
+        h1,h2,h3,h4,h5,h6 { font-family: "Playfair Display", Georgia, "Times New Roman", serif}
+        #editor {
+            width:100%;
+            height:500px;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin-bottom:10px;
+        }
+      </style>
+  </head>
+
+  <body>
+
+            <div class="loader"></div>
+
+    <div class="container">
+      <header class="blog-header py-3">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+          <div class="col-4 pt-1">
+            <h1>Shard designer</h1>
+          </div>
+          <div class="col-4 d-flex justify-content-end align-items-center">
+            <a class="btn btn-sm btn-outline-secondary" href="#">Sign out</a>
+          </div>
+        </div>
+      </header>
+
+      <div class="p-3 p-md-3 rounded">
+        <div class="col-md-6 px-0">
+            <button type="button" onClick = "loadPage('create')" class="btn btn-light">Create new shard</button>
+            <button type="button" onClick = "loadPage('list')" class="btn btn-light">List of my shards</button>
+        </div>
+      </div>
+
+    <main role="main" class="container" style = "margin-bottom:30px;">
+      <div class="row">
+
+            <!-- CONTAINER 1 -->
+          <div class="col-md-12 blog-main main_container" id = "container_create">
+            <div class="blog-post">
+              <h3 id = "simpleTransactionName"></h3>
+              <div class = "smart_attrs" id = "Deferred_attrs">
+                  <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <label for="shardName">You shard name</label>
+                        <input type="text" class="form-control" id="shardName" placeholder="Shard name">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="shardName">Stem node starting IP address</label>
+                        <input type="text" class="form-control" id="ipaddr" placeholder="IP Address">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="shardName">Elasticsearch IP address</label>
+                        <input type="text" class="form-control" id="elipad" placeholder="Elasticsearch IP Address">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="stemPublic">Public Key</label>
+                    <input type="text" class="form-control" id="stemPublic" placeholder="STEM public key">
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="chekSumTypes">Operating system</label>
+                        <select class="form-control" id="osTypes">
+                            <option value = "w7x86">Windows 7 x86</option>
+                            <option value = "w7x64">Windows 7 x64</option>
+                            <option value = "w10x86">Windows 10 x86</option>
+                            <option value = "w10x64">Windows 10 x64</option>
+                            <option value = "lx86">Linux x86</option>
+                            <option value = "lx64">Linux x64</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="chekSumTypes">HASH Algorithm</label>
+                        <select class="form-control" id="chekSumTypes">
+                            <option value = "sha1">SHA1</option>
+                            <option value = "md5">MD5</option>
+                            <option value = "sha224">SHA224</option>
+                            <option value = "sha256">SHA256</option>
+                            <option value = "sha384">SHA384</option>
+                            <option value = "sha512">SHA512</option>
+                            <option value = "blake2b">BLAKE2B</option>
+                            <option value = "blake2s">BLAKE2S</option>
+                            <option value = "sha3_224">SHA3_224</option>
+                            <option value = "sha3_256">SHA3_256</option>
+                            <option value = "sha3_384">SHA3_384</option>
+                            <option value = "sha3_shake128">SHA3_SHAKE128</option>
+                            <option value = "sha3_shake256">SHA3_SHAKE256</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="digitSignAlgh">Hash for secp256k1</label>
+                        <select class="form-control" id="digitSignAlgh">
+                            <option value = "sha1">SHA1</option>
+                            <option value = "md5">MD5</option>
+                            <option value = "sha224">SHA224</option>
+                            <option value = "sha256">SHA256</option>
+                            <option value = "sha384">SHA384</option>
+                            <option value = "sha512">SHA512</option>
+                            <option value = "blake2b">BLAKE2B</option>
+                            <option value = "blake2s">BLAKE2S</option>
+                            <option value = "sha3_224">SHA3_224</option>
+                            <option value = "sha3_256">SHA3_256</option>
+                            <option value = "sha3_384">SHA3_384</option>
+                            <option value = "sha3_shake128">SHA3_SHAKE128</option>
+                            <option value = "sha3_shake256">SHA3_SHAKE256</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="blockFreq">Block frequency</label>
+                      <input type="text" class="form-control" id="blockFreq" placeholder="> 5 sec">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="inputFile">Binary file or script</label>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                      </div>
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputFile" aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" for="inputFile">Choose file</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="shardName">Command line</label>
+                    <input type="text" class="form-control" id="commandString" placeholder="Command for start binary">
+                  </div>
+                  <div class="form-group">
+                      <label>Fields <span style = 'font-size:70%;'>(fields from the REDIS database that will be saved in a block)</span></label>
+                      <input type="text" class="form-control masFieldValue" style = 'margin-bottom:15px;' placeholder="">
+                      <button type="button" onClick = "addField(this);" class="btn btn-default">Add field</button>
+                      <hr>
+                  </div>
+                    <div class = "row p-3">
+                        <button type="button" class="btn btn-primary" onClick = "sendShardData();">Create shard</button>
+                        <button id = "downStemApp" type="button" class="btn btn-link btn-sm" onClick = "loadApp('stem');">Download Stem App</button>
+                        <button id = "downNodeApp" type="button" class="btn btn-link btn-sm" onClick = "loadApp('node');">Download Node App</button>
+                    </div>
+              </div>
+
+            </div><!-- /.blog-post -->
+          </div><!-- /.main-container -->
+
+            <!-- CONTAINER 2 -->
+          <div class="col-md-12 blog-main main_container" id = "container_list">
+            <div class="blog-post">
+                <table class="table table-md">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Nodes</th>
+                      <th scope="col">Users</th>
+                      <th scope="col">About</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>LOKI</td>
+                      <td>127</td>
+                      <td>25000</td>
+                        <td><a href = "http://loki.noosphere.net">http://loki.noosphere.net</a></td>
+                      <td><button type="button" onClick = "location.href = 'shardSettings.html?shard=loki'" class="btn btn-outline-dark btn-sm">Shard statistic</button></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>ACS</td>
+                      <td>5</td>
+                      <td>8000</td>
+                      <td><a href = "http://acs.noosphere.net">http://acs.noosphere.net</a></td>
+                      <td><button type="button" onClick = "location.href = 'shardSettings.html?shard=acs'" class="btn btn-outline-dark btn-sm">Shard statistic</button></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>DDAP</td>
+                      <td>45</td>
+                      <td>20000</td>
+                      <td><a href = "http://ddap.noosphere.net">http://ddap.noosphere.net</a></td>
+                      <td><button type="button" onClick = "location.href = 'shardSettings.html?shard=ddap'" class="btn btn-outline-dark btn-sm">Shard statistic</button></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">4</th>
+                      <td>NTM</td>
+                      <td>17</td>
+                      <td>400000</td>
+                      <td><a href = "http://ntm.noosphere.net">http://ntm.noosphere.net</a></td>
+                      <td><button type="button" onClick = "location.href = 'shardSettings.html?shard=ntm'" class="btn btn-outline-dark btn-sm">Shard statistic</button></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">5</th>
+                      <td>DHPC</td>
+                      <td>50000</td>
+                      <td>800</td>
+                      <td><a href = "http://dhpc.noosphere.net">http://dhpc.noosphere.net</a></td>
+                      <td><button type="button" onClick = "location.href = 'shardSettings.html?shard=dhpc'" class="btn btn-outline-dark btn-sm">Shard statistic</button></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">6</th>
+                      <td>EBS</td>
+                      <td>6700</td>
+                      <td>150000</td>
+                      <td><a href = "http://ebs.noosphere.net">http://ebs.noosphere.net</a></td>
+                      <td><button type="button" onClick = "location.href = 'shardSettings.html?shard=ebs'" class="btn btn-outline-dark btn-sm">Shard statistic</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div><!-- /.blog-post -->
+          </div><!-- /.main-container -->
+
+      </div><!-- /.row -->
+    </main><!-- /.container -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/ace/ace.js"></script>
+    <script src="js/bootstrap-datetimepicker.min.js"></script>
+    <script>
+        $("#downStemApp").hide();
+        $("#downNodeApp").hide();
+
+        var uuid = "";
+
+        function loadPage(numb){
+            $(".main_container").hide()
+            $("#container_" + numb).show()
+        } loadPage('create');
+
+        function addField(button){
+            $('<div class="form-row"><div class="form-group col-md-10"><input type="text" class="form-control masFieldValue" placeholder="Additional public key"></div><div class="form-group"><button type="button" onClick = "delPrev(this);" style = "margin-left:3px;" class="btn btn-danger">Delete</button></div></div>').insertBefore($(button))
+        }
+
+        function delPrev(button){
+            $(button).parent().parent().remove()
+        }
+
+        function sendShardData(){
+             URL_PORT = "";
+
+             var binary = $("#inputFile");
+             var fd = new FormData;
+             fd.append('binary', binary.prop('files')[0]);
+
+             var name = $("#shardName").val();
+             var ipaddr = $("#ipaddr").val();
+             var elipad = $("#elipad").val();
+             var stempk = $("#stemPublic").val();
+             var hash = $("#chekSumTypes").val();
+             var sign = $("#digitSignAlgh").val();
+             var freq = $("#blockFreq").val();
+             var command = $("#commandString").val();
+
+             var fields = "";
+             var masFields = $(".masFieldValue");
+             for (i = 0; i < masFields.length; i++){
+                if (i != 0)
+                    fields += ",";
+                fields += $(masFields[i]).val();
+             }
+
+             $.ajax({
+                url: "http://192.168.192.42:5005/shardDsgn/createShard?name=" + name + "&elipad=" + elipad + "&stempk=" + stempk + "&ipaddr=" + ipaddr + "&hash=" + hash + "&sign=" + sign + "&freq=" + freq + "&command=" + command + "&fields=" + fields,
+                async: false,
+                type: "POST",
+                data: fd,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: function(json){
+                    uuid = json.RESULT;
+                    $("#downStemApp").show();
+                    $("#downNodeApp").show();
+                }
+             });
+        }
+
+        function loadApp(type){
+            if (type == 'node')
+                window.open("http://192.168.192.42:5005/getNodeAppZip?uuid=" + uuid);
+
+            if (type == 'stem')
+                 window.open("http://192.168.192.42:5005/getStemAppZip?uuid=" + uuid);
+        }
+
+
+    </script>
+  </body>
+</html>

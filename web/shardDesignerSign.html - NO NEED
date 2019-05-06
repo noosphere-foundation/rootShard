@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Signin Shard Designer</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/signin.css" rel="stylesheet">
+  </head>
+
+  <body class="text-center">
+    <form class="form-signin">
+      <img class="mb-4" src="images/nlogo.png" alt="" width="96" height="96">
+      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+      <label for="inputEmail" class="sr-only">Email address</label>
+      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      <label for="passwordSignIn" class="sr-only">Password</label>
+      <input type="password" id="passwordSignIn" class="form-control" placeholder="Password" required>
+      <label for="passwordSignIn" class="sr-only">Captcha</label>
+      <input type="text" id="captcha" class="form-control" placeholder="Captcha" required>
+      <div class="checkbox mb-3">
+        <img id="captcha-img" class="captcha-img" style = "width:100%;margin-top:10px;" alt="captcha image">
+      </div>
+      <div class="checkbox mb-3">
+        <label>
+            Not with us? <a href = "registerForm.html">register</a>
+        </label>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" id = "signinButton" type="button">Sign in</button>
+      <p class="mt-5 mb-3 text-muted">&copy; Noosphere 2017-2018</p>
+    </form>
+    <script src="js/sjcl.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')</script>
+    <script>
+      var ip = "http://192.168.0.12:8081"
+
+        $.ajax({
+          type: "POST",
+          url: ip + "/generate-captcha",
+        }).done(function(captcha) {
+          $("#captcha-img").attr("src", captcha);
+        });
+
+      $("#signinButton").on("click", function(){
+        var bits = sjcl.hash.sha256.hash($("#passwordSignIn").val());
+        var passwordHash = sjcl.codec.hex.fromBits(bits);
+
+        $.ajax({
+          type: "POST",
+          url: ip + "/login",
+          data: "email=" + $("#inputEmail").val() + "&password=" + passwordHash + "&captcha="
+            + $("#captcha").val()
+        })
+          .done(function(msg) {
+            if (msg === "0" || msg === "1" || msg === "2") {
+              if (msg === "0") {
+                alert("Incorrect email or password. Try again!");
+                $("#inputEmail").val("");
+                $("#passwordSignIn").val("");
+                $("#inputEmail").focus();
+              } else if (msg === "1") {
+                alert("Please confirm your email!");
+              } else {
+                alert("Your captcha solution is incorrect. Please try again!");
+                generateCaptcha();
+                $("#captcha-input").val("");
+                $("#captcha-input").focus();
+              }
+            } else {
+              window.location = ip + "/logged-in?" + msg;
+            }
+          });
+      });
+
+    </script>
+  </body>
+</html>

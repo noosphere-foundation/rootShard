@@ -1,0 +1,240 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block sidebar">
+          <div class="sidebar-sticky">
+            <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Statistic (current)</span>
+              <a class="d-flex align-items-center text-muted" href="#">
+                <span data-feather="plus-circle"></span>
+              </a>
+            </h4>
+            <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                  <span class="nav-link">User count: <span style = "font-weight:bold;" id = "ucount">1000</span></span>
+              </li>
+              <li class="nav-item">
+                  <span class="nav-link">Node count: <span style = "font-weight:bold;" id = "ncount">100</span></span>
+              </li>
+              <li class="nav-item">
+                  <span class="nav-link">Earned tokens: <span style = "font-weight:bold;" id = "etokens">120</span> <b>NZT</b></span>
+              </li>
+              <li class="nav-item">
+                  <span class="nav-link">Paid tokens: <span style = "font-weight:bold;" id = "ptnodes">67</span> <b>NZT</b></span>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h1 class="h2" id = "shardName"></h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <div class="btn-group mr-2">
+                <button class="btn btn-sm btn-outline-secondary">Unregister shard</button>
+              </div>
+            </div>
+          </div>
+
+          <canvas class="my-4" id="myChart" width="900" height="200"></canvas>
+
+          <h2 id = "source_name">Section title</h2>
+          <div class="table-responsive">
+            <table class="table table-bordered table-sm">
+              <thead>
+                <tr id = "thead">
+                </tr>
+              </thead>
+              <tbody>
+                <tr id = "tbody_1">
+                    <td>Users</td>
+                </tr>
+                <tr id = "tbody_2">
+                    <td>Nodes</td>
+                </tr>
+                <tr id = "tbody_3">
+                    <td>Earned tokens</td>
+                </tr>
+                <tr id = "tbody_4">
+                    <td>Paid tokens</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-slim.min.js"><\/script>')</script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <!--&lt;!&ndash; Icons &ndash;&gt;-->
+    <!--<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>-->
+    <!--<script>-->
+      <!--feather.replace()-->
+    <!--</script>-->
+
+    <!-- Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script>
+
+
+        var url = new URL(location.href);
+        var shard = url.searchParams.get("shard");
+        //$("#shardName").html(shard.toUpperCase());
+
+      var ctx = document.getElementById("myChart");
+      var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: [{
+            data: [],
+            lineTension: 0,
+            label: 'Users',
+            backgroundColor: 'transparent',
+            borderColor: 'maroon',
+            borderWidth: 4,
+            pointBackgroundColor: 'maroon'
+          },{
+            data: [],
+            lineTension: 0,
+            label: 'Nodes',
+            backgroundColor: 'transparent',
+            borderColor: 'gold',
+            borderWidth: 4,
+            pointBackgroundColor: 'gold'
+          },{
+            data: [],
+            lineTension: 0,
+            label: 'Earned tokens',
+            backgroundColor: 'transparent',
+            borderColor: '#007bff',
+            borderWidth: 4,
+            pointBackgroundColor: '#007bff'
+          },{
+            data: [],
+            lineTension: 0,
+            label: 'Paid tokens',
+            backgroundColor: 'transparent',
+            borderColor: 'green',
+            borderWidth: 4,
+            pointBackgroundColor: 'green'
+          }]
+        },
+          options: {
+              animation : false,
+              legend: {
+                  position: 'top',
+                  padding: '500px'
+              },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }]
+              }
+          }
+      });
+
+        function getRandomInt(min, max) {
+          return Math.round(Math.random() * (max - min)) + min;
+        }
+
+      function loadGraph(){
+            mas_1 = [];
+            mas_2 = [];
+            mas_3 = [];
+            mas_4 = [];
+            labels = [];
+
+            temp = "<th>Name</th>";
+            for (i = 0; i < 30; i++){
+                labels[i] = (i+1) + ".10"
+                temp += "<th>" + labels[i] + "</th>";
+            }
+
+            $("#thead").html(temp);
+
+            temp = "";
+            for (i = 0; i < 30; i++){
+                if (i == 0)
+                    mas_1[i] = getRandomInt(0, 20)
+                else
+                    mas_1[i] = mas_1[i-1] + getRandomInt(-10, 50)
+
+                temp += "<td>" + mas_1[i] + "</td>";
+            }
+
+            $("#tbody_1").append(temp);
+            myChart.data.datasets[0].data = mas_1;
+
+            temp = "";
+            for (i = 0; i < 30; i++){
+                if (i == 0)
+                    mas_2[i] = getRandomInt(5, 10)
+                else
+                    mas_2[i] = mas_2[i-1] + getRandomInt(-7, 15)
+
+                temp += "<td>" + mas_2[i] + "</td>";
+            }
+
+            $("#tbody_2").append(temp);
+            myChart.data.datasets[1].data = mas_2;
+
+            temp = "";
+            for (i = 0; i < 30; i++){
+                if (i == 0)
+                    mas_3[i] = getRandomInt(0, 20)
+                else
+                    mas_3[i] = mas_3[i-1] + getRandomInt(-10, 130)
+
+                temp += "<td>" + mas_3[i] + "</td>";
+            }
+
+            $("#tbody_3").append(temp);
+            myChart.data.datasets[2].data = mas_3;
+
+            temp = "";
+            for (i = 0; i < 30; i++){
+                if (i == 0)
+                    mas_4[i] = getRandomInt(0, 20)
+                else
+                    mas_4[i] = mas_4[i-1] + getRandomInt(-10, 100)
+
+                temp += "<td>" + mas_4[i] + "</td>";
+            }
+
+            $("#tbody_4").append(temp);
+            myChart.data.datasets[3].data = mas_4;
+
+
+            myChart.data.labels = labels;
+            myChart.update();
+      }loadGraph()
+
+
+    </script>
+  </body>
+</html>
